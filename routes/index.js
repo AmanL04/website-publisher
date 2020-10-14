@@ -12,7 +12,6 @@ module.exports = function (router) {
 		multer({ storage: storage }).single("website"),
 		require("../src/deployWebsite")
 	);
-	// router.put("/v1/website/deploy", multer({ storage: storage }), require("../src/deployWebsite"));
 	// router.put("/v1/website/undeploy", require("../middleware/upload"), require("../src/undeployWebsite"));
 	// router.put("/v1/website/remove", require("../middleware/upload"), require("../src/undeployWebsite"));
 };

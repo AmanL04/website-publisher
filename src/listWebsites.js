@@ -3,7 +3,7 @@ const to = require("../utils/to");
 const response = require("../utils/response");
 
 module.exports = async function listWebsites(req, res) {
-	const [err, websites] = await to(Website.find({ username: req.username }));
+	const [err, websites] = await to(Website.find({ username: req.user.username }, "-_id -username").lean());
 	if (err) {
 		console.log(new Date(Date.now()), ": ", err);
 		return res.status(500).json(response(false, null, "Something went wrong"));

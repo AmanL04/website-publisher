@@ -23,7 +23,7 @@ module.exports = async function (req, res) {
 	}
 
 	// Determine the subdomain and unzip the uploaded zip in the appropriate location
-	const subdomain = req.body.subdomain || randomWord();
+	const subdomain = req.body.subdomain || randomWord() + "." + process.env.DOMAIN;
 	var folder;
 	try {
 		folder = await folderPath(subdomain);
@@ -34,7 +34,7 @@ module.exports = async function (req, res) {
 
 	// Save the website for the current user
 	const [saveWebsiteError, website] = await to(
-		new Website({ username: req.user.username, url: subdomain + ".publish.amanlodha.tech" }).save()
+		new Website({ username: req.user.username, url: subdomain }).save()
 	);
 	if (saveWebsiteError) {
 		console.log(new Date(Date.now()), ": ", saveWebsiteError);

@@ -23,7 +23,8 @@ module.exports = async function (req, res) {
 	}
 
 	// Determine the subdomain and unzip the uploaded zip in the appropriate location
-	const subdomain = req.body.subdomain || randomWord() + "." + process.env.DOMAIN;
+	const subdomain = (req.body.subdomain || randomWord()) + "." + process.env.DOMAIN;
+	console.log(subdomain);
 	var folder;
 	try {
 		folder = await folderPath(subdomain);

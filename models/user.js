@@ -23,7 +23,7 @@ User.methods.validatePassword = function (password) {
 User.methods.createKeys = function () {
 	const oneHour = 60 * 60 * 1000;
 	const key = randomKey();
-	const text = this._id.toString() + ":" + Date.now() + oneHour;
+	const text = this._id.toString() + ":" + (Date.now() + oneHour);
 	const firstEncryption = encrypt(text, key);
 	const secondEncryption = encrypt(firstEncryption, this.salt);
 	return { key1: key, key2: secondEncryption };

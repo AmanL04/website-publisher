@@ -22,13 +22,18 @@ module.exports = async function authenticate(req, res, next) {
 		return res.status(401).json(response(false, null, "User not authenticated!"));
 	}
 
-	const firstDecryption = decrypt(key2, user.salt);
-	const [id, deadline] = decrypt(firstDecryption, key1).split(":");
-	if (user._id.toString() != id) {
-		return res.status(401).json(response(false, null, "User not authenticated!"));
-	}
-	if (deadline < Date.now()) {
-		return res.status(401).json(response(false, null, "Authentication keys have expired"));
+	try {
+		const firstDecryption = decrypt(key2, user.salt);
+		const [id, deadline] = decrypt(firstDecryption, key1).split(":");
+		if (user._id.toString() != id) {
+			return res.status(401).json(response(false, null, "User not authenticated!"));
+		}
+		if (deadline < Date.now()) {
+			return res.status(401).json(response(false, null, "Authentication keys have expired"));
+		}
+	} catch (err) {
+		console.log(err);
+		return res.status(401).json(response(false, null, "User not authenticated"));
 	}
 
 	req.user = user;

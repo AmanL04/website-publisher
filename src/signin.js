@@ -7,6 +7,7 @@ module.exports = async function signIn(req, res) {
 	const { username, password } = req.body;
 
 	if (!username || !password) {
+		console.log("No username password");
 		return res.status(401).json(response(false, null, "Invalid username and password combination!"));
 	}
 
@@ -18,6 +19,11 @@ module.exports = async function signIn(req, res) {
 		return res.status(401).json(response(false, null, "Couldn't authenticate. Something went wrong!"));
 	}
 	if (!user || !user.validatePassword(password)) {
+		if (!user) {
+			console.log("User doesn't exist");
+		} else {
+			console.log("Wrong password");
+		}
 		return res.status(401).json(response(false, null, "Invalid username and password combination!"));
 	}
 

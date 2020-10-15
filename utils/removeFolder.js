@@ -1,5 +1,10 @@
-const fsp = require("fs").promises;
+const rimraf = require("rimraf");
 
 module.exports = function removeFolder(path) {
-	return fsp.rmdir(path, { recursive: true });
+	return new Promise((resolve, reject) => {
+		rimraf(path, (err) => {
+			if (err) reject(err);
+			else resolve();
+		});
+	});
 };
